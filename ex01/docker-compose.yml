@@ -1,0 +1,39 @@
+services:
+  postgres_db:
+    container_name: postgres_db
+    image: postgres:17-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: lps
+      POSTGRES_DB: piscineds
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - db_network
+  pgadmin:
+    image: dpage/pgadmin4:9.8
+    container_name: pgadmin_web
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      # Required by pgAdmin
+      PGADMIN_DEFAULT_EMAIL: demo@example.com
+      PGADMIN_DEFAULT_PASSWORD: secret
+    depends_on: 
+      - postgres_db
+    networks:
+      - db_network
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
+volumes:
+  pgadmin_data:
+  postgres_data:
+
+networks:
+  db_network:
+    driver: bridge

@@ -1,0 +1,27 @@
+# Use postgres/example user/password credentials
+
+services:
+  postgres_db:
+    container_name: postgres_db
+    image: postgres:17-alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_USER: lps
+      POSTGRES_DB: piscineds
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
+    # networks:
+    #   - db_network
+
+# volumes:
+#   postgres_data:
+#   pgadmin_data:
+
+# networks:
+#   db_network:
+#     driver: bridge
+
+
